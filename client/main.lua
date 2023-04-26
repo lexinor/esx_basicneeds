@@ -33,13 +33,13 @@ AddEventHandler('esx_status:loaded', function(status)
 	TriggerEvent('esx_status:registerStatus', 'hunger', 1000000, '#CFAD0F', function(status)
 		return Config.Visible
 	end, function(status)
-		status.remove(100)
+		status.remove(Config.StatusInfos.hunger.toRemove)
 	end)
 
 	TriggerEvent('esx_status:registerStatus', 'thirst', 1000000, '#0C98F1', function(status)
 		return Config.Visible
 	end, function(status)
-		status.remove(75)
+		status.remove(Config.StatusInfos.thirst.toRemove)
 	end)
 end)
 
