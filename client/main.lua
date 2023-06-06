@@ -43,11 +43,24 @@ AddEventHandler('esx_status:loaded', function(status)
 	end)
 end)
 
+local hasBeenNotified = false
+
 AddEventHandler('esx_status:onTick', function(data)
 	local playerPed  = PlayerPedId()
 	local prevHealth = GetEntityHealth(playerPed)
 	local health     = prevHealth
-	
+	local hunger = data["hunger"].percent
+	local thirst = data["thirst"].percent
+
+	if hunger >= Config.LowValueAlert and thirst >= Config.LowValueAlert and hasBeenNotified == true then
+		hasBeenNotified = false
+		lib.hideTextUI()
+	end
+	if hunger < Config.LowValueAlert or thirst < Config.LowValueAlert then
+		lib.showTextUI(TranslateCap('low'), Config.TUI)
+		hasBeenNotified = true
+	end
+
 	for k, v in pairs(data) do
 		if v.name == 'hunger' and v.percent == 0 then
 			if prevHealth <= 150 then
@@ -62,8 +75,7 @@ AddEventHandler('esx_status:onTick', function(data)
 				health = health - 1
 			end
 		end
-	end
-	
+	end	
 	if health ~= prevHealth then SetEntityHealth(playerPed, health) end
 end)
 
@@ -128,4 +140,10 @@ AddEventHandler('esx_basicneeds:onDrink', function(prop_name)
         prop_name = 'prop_ld_flow_bottle'
     end
     TriggerEvent('esx_basicneeds:onUse', 'drink', prop_name)
+end)
+
+
+RegisterCommand("rst", function ()
+	TriggerEvent("esx_status:set", "hunger", 51000)
+	TriggerEvent("esx_status:set", "thirst", 51000)
 end)
