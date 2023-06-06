@@ -141,9 +141,3 @@ AddEventHandler('esx_basicneeds:onDrink', function(prop_name)
     end
     TriggerEvent('esx_basicneeds:onUse', 'drink', prop_name)
 end)
-
-
-RegisterCommand("rst", function ()
-	TriggerEvent("esx_status:set", "hunger", 51000)
-	TriggerEvent("esx_status:set", "thirst", 51000)
-end)
