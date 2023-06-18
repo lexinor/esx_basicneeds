@@ -15,12 +15,12 @@ Config.TUI = {
 	}
 }
 
-Config.StatusInfos = {	
+Config.StatusInfos = {
 	thirst = {
-		toRemove = 175,
+		toRemove = 100,
 	},
 	hunger = {
-		toRemove = 275,
+		toRemove = 150,
 	},
 }
 
